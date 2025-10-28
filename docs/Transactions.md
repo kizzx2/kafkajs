@@ -13,11 +13,11 @@ You initialize a transaction by making an async call to `producer.transaction()`
 
 > Note: Kafka requires that the transactional producer have the following configuration to _guarantee_ EoS ("Exactly-once-semantics"):
 >
-> - The producer must have a max in flight requests of 1
+> - The producer must have a max in flight requests of 0
 > - The producer must wait for acknowledgement from all replicas (acks=-1)
 > - The producer must have unlimited retries
 
-Configure the producer client with `maxInFlightRequests: 1`, `idempotent: true` and a `transactionalId` to guarantee EOS. Configuring the options will enable the settings mentioned above.
+Configure the producer client with `maxInFlightRequests: 0`, `idempotent: true` and a `transactionalId` to guarantee EOS. Configuring the options will enable the settings mentioned above.
 
 ```javascript
 const client = new Kafka({
@@ -26,7 +26,7 @@ const client = new Kafka({
 })
 const producer = client.producer({
   transactionalId: 'my-transactional-producer',
-  maxInFlightRequests: 1,
+  maxInFlightRequests: 0,
   idempotent: true
 })
 ```
